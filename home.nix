@@ -1,10 +1,17 @@
 { config, pkgs, ... }:
 
+let
+  pathsConfig = import ./paths.nix;
+  homeManagerPath = "${pathsConfig.home.homeDirectory}/.config/home-manager";
+  homeUsername = pathsConfig.home.username;
+  homeDirectory = pathsConfig.home.homeDirectory;
+in
 {
   imports = [
-    ./paths.nix
     ./secrets.nix
   ];
+  home.username = homeUsername;
+  home.homeDirectory = homeDirectory;
 
   # This value determines the Home Manager release that your configuration is
   # compatible with. This helps avoid breakage when a new Home Manager release
@@ -44,21 +51,16 @@
   # Home Manager is pretty good at managing dotfiles. The primary way to manage
   # plain files is through 'home.file'.
   home.file = {
-    # ".gradle/gradle.properties".text = ''
-    #   org.gradle.console=verbose
-    #   org.gradle.daemon.idletimeout=3600000
-    # '';
-
-    ".config/tmux/tmux.conf".source = files/tmux/tmux.conf;
-    ".config/pypoetry/config.toml".source = files/pypoetry/config.toml;
-    ".config/nix/nix.conf".source = files/nix/nix.conf;
-    ".config/kitty/kitty.conf".source = files/kitty/kitty.conf;
-    ".config/alacritty/alacritty.toml".source = files/alacritty/alacritty.toml;
-    ".config/zed".source = files/zed;
-    ".config/zed".recursive = true;
-    ".gitconfig".source = files/.gitconfig;
-    ".inputrc".source = files/.inputrc;
-    ".zshrc".source = files/.zshrc;
+    ".config/tmux/tmux.conf".source = config.lib.file.mkOutOfStoreSymlink "${homeManagerPath}/files/tmux/tmux.conf";
+    ".config/pypoetry/config.toml".source = config.lib.file.mkOutOfStoreSymlink "${homeManagerPath}/files/pypoetry/config.toml";
+    ".config/nix/nix.conf".source = config.lib.file.mkOutOfStoreSymlink "${homeManagerPath}/files/nix/nix.conf";
+    ".config/kitty/kitty.conf".source = config.lib.file.mkOutOfStoreSymlink "${homeManagerPath}/files/kitty/kitty.conf";
+    ".config/alacritty/alacritty.toml".source = config.lib.file.mkOutOfStoreSymlink "${homeManagerPath}/files/alacritty/alacritty.toml";
+    ".config/zed".source = config.lib.file.mkOutOfStoreSymlink "${homeManagerPath}/files/zed";
+    ".config/nvim".source = config.lib.file.mkOutOfStoreSymlink "${homeManagerPath}/files/nvim";
+    ".gitconfig".source = config.lib.file.mkOutOfStoreSymlink "${homeManagerPath}/files/.gitconfig";
+    ".inputrc".source = config.lib.file.mkOutOfStoreSymlink "${homeManagerPath}/files/.inputrc";
+    ".zshrc".source = config.lib.file.mkOutOfStoreSymlink "${homeManagerPath}/files/.zshrc";
   };
 
   # Home Manager can also manage your environment variables through
