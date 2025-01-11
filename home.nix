@@ -26,7 +26,7 @@
     # # overrides. You can do that directly here, just don't forget the
     # # parentheses. Maybe you want to install Nerd Fonts with a limited number of
     # # fonts?
-    # (pkgs.nerdfonts.override { fonts = [ "FantasqueSansMono" ]; })
+    (nerdfonts.override { fonts = [ "JetBrainsMono" "RobotoMono" ]; })
 
     # # You can also create simple shell scripts directly inside your
     # # configuration. For example, this adds a command 'my-hello' to your
@@ -41,6 +41,11 @@
     wget
     curl
     btop
+    devenv
+    direnv
+    taskwarrior3
+    taskwarrior-tui
+    firefox-unwrapped
   ];
 
   # Home Manager is pretty good at managing dotfiles. The primary way to manage
@@ -56,6 +61,19 @@
     #   org.gradle.console=verbose
     #   org.gradle.daemon.idletimeout=3600000
     # '';
+
+    ".config/tmux/tmux.conf".source = files/tmux/tmux.conf;
+    ".config/pypoetry/config.toml".source = files/pypoetry/config.toml;
+    ".config/nix/nix.conf".source = files/nix/nix.conf;
+    ".config/kitty/kitty.conf".source = files/kitty/kitty.conf;
+    ".config/alacritty/alacritty.toml".source = files/alacritty/alacritty.toml;
+    ".config/zed".source = files/zed;
+    ".config/zed".recursive = true;
+    ".gitconfig".source = files/.gitconfig;
+    ".inputrc".source = files/.inputrc;
+    ".zshrc".source = files/.zshrc;
+    ".oh-my-zsh".source = files/.oh-my-zsh;
+    ".oh-my-zsh".recursive = true;
   };
 
   # Home Manager can also manage your environment variables through
@@ -76,22 +94,14 @@
   #
   home.sessionVariables = {
     EDITOR = "nvim";
+    BROWSER = "firefox";
+    ZSH = "${config.home.homeDirectory}/.oh-my-zsh";
   };
 
   programs.git = {
     enable = true;
     userName = "Nicholas";
     userEmail = "nicholaszolton@gmail.com";
-  };
-
-  programs.starship = {
-    enable = true;
-    settings = {
-      aws.disabled = true;
-      gcloud.disabled = true;
-      line_break.disabled = true;
-      add_newline = false;
-    };
   };
 
   systemd.user.startServices = "sd-switch";
