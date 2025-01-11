@@ -26,7 +26,9 @@
     # # overrides. You can do that directly here, just don't forget the
     # # parentheses. Maybe you want to install Nerd Fonts with a limited number of
     # # fonts?
-    (nerdfonts.override { fonts = [ "JetBrainsMono" "RobotoMono" ]; })
+    # (nerdfonts.override { fonts = [ "JetBrainsMono" "RobotoMono" ]; })
+    nerd-fonts.jetbrains-mono
+    nerd-fonts.roboto-mono
 
     # # You can also create simple shell scripts directly inside your
     # # configuration. For example, this adds a command 'my-hello' to your
@@ -42,6 +44,7 @@
     curl
     btop
     devenv
+    cachix
     direnv
     taskwarrior3
     taskwarrior-tui
@@ -51,12 +54,6 @@
   # Home Manager is pretty good at managing dotfiles. The primary way to manage
   # plain files is through 'home.file'.
   home.file = {
-    # # Building this configuration will create a copy of 'dotfiles/screenrc' in
-    # # the Nix store. Activating the configuration will then make '~/.screenrc' a
-    # # symlink to the Nix store copy.
-    # ".screenrc".source = dotfiles/screenrc;
-
-    # # You can also set the file content immediately.
     # ".gradle/gradle.properties".text = ''
     #   org.gradle.console=verbose
     #   org.gradle.daemon.idletimeout=3600000
@@ -69,11 +66,13 @@
     ".config/alacritty/alacritty.toml".source = files/alacritty/alacritty.toml;
     ".config/zed".source = files/zed;
     ".config/zed".recursive = true;
+    ".config/nvim".source = files/nvim;
+    ".config/nvim".recursive = true;
+    ".oh-my-zsh".source = files/.oh-my-zsh;
+    ".oh-my-zsh".recursive = true;
     ".gitconfig".source = files/.gitconfig;
     ".inputrc".source = files/.inputrc;
     ".zshrc".source = files/.zshrc;
-    ".oh-my-zsh".source = files/.oh-my-zsh;
-    ".oh-my-zsh".recursive = true;
   };
 
   # Home Manager can also manage your environment variables through
