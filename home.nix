@@ -59,7 +59,6 @@
     ".gitconfig".source = files/.gitconfig;
     ".inputrc".source = files/.inputrc;
     ".zshrc".source = files/.zshrc;
-    ".zshenv".source = files/.zshenv;
   };
 
   # Home Manager can also manage your environment variables through

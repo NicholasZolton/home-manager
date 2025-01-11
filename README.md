@@ -19,3 +19,9 @@ home-manager switch
 ```
 
 This will update all of your dotfiles to the latest version.
+
+In the future, you will be able to update your dotfiles by running the following:
+
+```bash
+updateh
+```
