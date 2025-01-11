@@ -39,6 +39,7 @@
     git
     tmux
     neovim
+    oh-my-zsh
     zsh
     wget
     curl
@@ -69,6 +70,7 @@
     ".gitconfig".source = files/.gitconfig;
     ".inputrc".source = files/.inputrc;
     ".zshrc".source = files/.zshrc;
+    ".zshenv".source = files/.zshenv;
   };
 
   # Home Manager can also manage your environment variables through
@@ -99,14 +101,9 @@
   };
 
   programs.zsh = {
+    enable = true;
     oh-my-zsh = {
       enable = true;
-      plugins = [ "git" "poetry" "direnv" ];
-      theme = "robbyrussell";
-      histSize = 10000;
-      syntaxHighlighting.enable = true;
-      autosuggestion.enable = true;
-      enableCompletion = true;
     };
   };
 
