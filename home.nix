@@ -22,25 +22,15 @@
     # # "Hello, world!" when run.
     # pkgs.hello
 
-    # # It is sometimes useful to fine-tune packages, for example, by applying
-    # # overrides. You can do that directly here, just don't forget the
-    # # parentheses. Maybe you want to install Nerd Fonts with a limited number of
-    # # fonts?
-    # (nerdfonts.override { fonts = [ "JetBrainsMono" "RobotoMono" ]; })
-    nerd-fonts.jetbrains-mono
-    nerd-fonts.roboto-mono
-
     # # You can also create simple shell scripts directly inside your
     # # configuration. For example, this adds a command 'my-hello' to your
     # # environment:
     # (pkgs.writeShellScriptBin "my-hello" ''
     #   echo "Hello, ${config.home.username}!"
     # '')
-    git
+    nerd-fonts.jetbrains-mono
+    nerd-fonts.roboto-mono
     tmux
-    neovim
-    oh-my-zsh
-    zsh
     wget
     curl
     btop
@@ -49,7 +39,6 @@
     direnv
     taskwarrior3
     taskwarrior-tui
-    firefox-unwrapped
   ];
 
   # Home Manager is pretty good at managing dotfiles. The primary way to manage
@@ -94,6 +83,7 @@
     BROWSER = "firefox";
   };
 
+  programs.firefox.enable = true;
   programs.git = {
     enable = true;
     userName = "Nicholas";
@@ -105,6 +95,12 @@
     oh-my-zsh = {
       enable = true;
     };
+  };
+
+  programs.neovim = {
+    enable = true;
+    extraLuaPackages = ps: [ ps.magick ];
+    extraPackages = [ pkgs.imagemagick ];
   };
 
   systemd.user.startServices = "sd-switch";

@@ -3,8 +3,7 @@
 # export JRE_HOME=$JAVA_HOME/jre
 # export CLASSPATH=$CLASSPATH.:$JAVA_HOME/lib:$JRE_HOME/lib
 # export PATH=$JAVA_HOME/bin:$JRE_HOME/bin:$PATH
-export BROWSER=firefox
-export PATH=$PATH:/home/nicholas/nvim-linux64/bin
+
 
 # Path to your Oh My Zsh installation.
 export ZSH="$HOME/.oh-my-zsh"
@@ -93,7 +92,7 @@ source $HOME/.nix-profile/etc/profile.d/hm-session-vars.sh
 
 # Preferred editor for local and remote sessions
 if [[ -n $SSH_CONNECTION ]]; then
-  export EDITOR='vim'
+  export EDITOR='vi'
 else
   export EDITOR='nvim'
 fi
@@ -116,13 +115,13 @@ bindkey '^H' backward-kill-word
 alias zshconfig="nvim ~/.zshrc"
 alias ohmyzsh="nvim ~/.oh-my-zsh"
 alias tasks="task sync && taskwarrior-tui && task sync"
-alias connecthadoop="ssh localhost"
 alias ls="ls --hyperlink=auto --color"
 alias python="python3"
 alias xclip="xclip -selection clipboard "
 alias xopen='function _xopen(){ xdg-open $1 1>/dev/null 2>&1; };_xopen'
 alias n='function _nvimopen(){ nvim $1; };_nvimopen'
 alias search-nix="nix repl -f '<nixpkgs>'"
+alias updateh="home-manager switch"
 
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
