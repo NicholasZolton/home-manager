@@ -66,10 +66,6 @@
     ".config/alacritty/alacritty.toml".source = files/alacritty/alacritty.toml;
     ".config/zed".source = files/zed;
     ".config/zed".recursive = true;
-    ".config/nvim".source = files/nvim;
-    ".config/nvim".recursive = true;
-    ".oh-my-zsh".source = files/.oh-my-zsh;
-    ".oh-my-zsh".recursive = true;
     ".gitconfig".source = files/.gitconfig;
     ".inputrc".source = files/.inputrc;
     ".zshrc".source = files/.zshrc;
@@ -94,13 +90,24 @@
   home.sessionVariables = {
     EDITOR = "nvim";
     BROWSER = "firefox";
-    ZSH = "${config.home.homeDirectory}/.oh-my-zsh";
   };
 
   programs.git = {
     enable = true;
     userName = "Nicholas";
     userEmail = "nicholaszolton@gmail.com";
+  };
+
+  programs.zsh = {
+    oh-my-zsh = {
+      enable = true;
+      plugins = [ "git" "poetry" "direnv" ];
+      theme = "robbyrussell";
+      histSize = 10000;
+      syntaxHighlighting.enable = true;
+      autosuggestion.enable = true;
+      enableCompletion = true;
+    };
   };
 
   systemd.user.startServices = "sd-switch";

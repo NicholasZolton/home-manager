@@ -120,8 +120,6 @@ alias connecthadoop="ssh localhost"
 alias ls="ls --hyperlink=auto --color"
 alias python="python3"
 alias xclip="xclip -selection clipboard "
-# alias hadoopls='function _hadoopls(){ /home/nicholas/Documents/hadoop/bin/hdfs dfs -ls $1; };_hadoopls'
-# alias hadoopcat='function _hadoopcat(){ rm -f /tmp/hadoop_cat_tmp.txt; /home/nicholas/Documents/hadoop/bin/hdfs dfs -get $1 /tmp/hadoop_cat_tmp.txt; cat /tmp/hadoop_cat_tmp.txt; };_hadoopcat'
 alias xopen='function _xopen(){ xdg-open $1 1>/dev/null 2>&1; };_xopen'
 alias n='function _nvimopen(){ nvim $1; };_nvimopen'
 alias search-nix="nix repl -f '<nixpkgs>'"
