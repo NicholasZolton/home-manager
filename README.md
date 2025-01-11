@@ -25,3 +25,9 @@ In the future, you will be able to update your dotfiles by running the following
 ```bash
 updateh
 ```
+
+# Notes and Quirks
+
+Since I have updated this to use symlinks back to the files in this repo, you should be able to run any command as you would normally.
+
+This could cause some merge conflicts in the future, however, so be careful.

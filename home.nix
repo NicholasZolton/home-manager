@@ -82,6 +82,7 @@ in
   home.sessionVariables = {
     EDITOR = "nvim";
     BROWSER = "firefox";
+    NIXHELLO = "Hello, world!";
   };
 
   programs.firefox.enable = true;
