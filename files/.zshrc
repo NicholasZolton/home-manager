@@ -127,3 +127,13 @@ export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 fpath+=${ZDOTDIR:-~}/.zsh_functions
+
+# fix for WSLg
+if [ -f "/proc/sys/fs/binfmt_misc/WSLInterop" ]; then
+    export IS_WSL=1
+    export $(dbus-launch)
+fi
+
+if [[ ! $(tmux list-sessions) ]]; then
+  tmux
+fi

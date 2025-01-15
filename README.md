@@ -10,6 +10,20 @@ First, you need to install [Nix](https://nixos.org/nix/download.html).
 
 Then, you need to install [Home Manager](https://nix-community.github.io/home-manager/index.xhtml#sec-install-standalone).
 
+After that, you need to clone this repo (with submodules):
+
+```bash
+git clone --recurse-submodules https://github.com/NicholasZolton/home-manager.git ~/.config/home-manager
+```
+
+Lastly, you need to run the following:
+
+```bash
+home-manager switch
+```
+
+You should now be in a shell with all of the tools installed.
+
 ## Updating
 
 To update your machine, run the following:

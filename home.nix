@@ -25,9 +25,6 @@ in
   # The home.packages option allows you to install Nix packages into your
   # environment.
   home.packages = with pkgs; [
-    # # Adds the 'hello' command to your environment. It prints a friendly
-    # # "Hello, world!" when run.
-    # pkgs.hello
 
     # # You can also create simple shell scripts directly inside your
     # # configuration. For example, this adds a command 'my-hello' to your
@@ -37,6 +34,7 @@ in
     # '')
     nerd-fonts.jetbrains-mono
     nerd-fonts.roboto-mono
+    pipewire
     tmux
     wget
     curl
@@ -46,6 +44,7 @@ in
     direnv
     taskwarrior3
     taskwarrior-tui
+    cozy
   ];
 
   # Home Manager is pretty good at managing dotfiles. The primary way to manage
@@ -70,15 +69,10 @@ in
   # located at either
   #
   #  ~/.nix-profile/etc/profile.d/hm-session-vars.sh
-  #
   # or
-  #
   #  ~/.local/state/nix/profiles/profile/etc/profile.d/hm-session-vars.sh
-  #
   # or
-  #
   #  /etc/profiles/per-user/nicholas/etc/profile.d/hm-session-vars.sh
-  #
   home.sessionVariables = {
     EDITOR = "nvim";
     BROWSER = "firefox";
