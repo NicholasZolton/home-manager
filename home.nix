@@ -46,6 +46,11 @@ in
     taskwarrior-tui
     cozy
     lua
+    fd
+    ripgrep
+    python314
+    gcc14
+    nodejs_23
   ];
 
   # Home Manager is pretty good at managing dotfiles. The primary way to manage

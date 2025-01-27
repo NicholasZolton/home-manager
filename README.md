@@ -45,3 +45,22 @@ updateh
 Since I have updated this to use symlinks back to the files in this repo, you should be able to run any command as you would normally.
 
 This could cause some merge conflicts in the future, however, so be careful.
+
+You may have to manually switch to the zsh shell.
+
+## Switching The Shell
+
+Add following to your `/etc/shells`:
+```txt
+/home/nicholas/.nix-profile/bin/zsh
+```
+
+And then run:
+```bash
+chsh -s /home/nicholas/.nix-profile/bin/zsh
+```
+
+And add the following to your `~/.zprofile` if it is unable to see nix things:
+```txt
+if [ -e $HOME/.nix-profile/etc/profile.d/nix.sh ]; then . $HOME/.nix-profile/etc/profile.d/nix.sh; fi
+```
