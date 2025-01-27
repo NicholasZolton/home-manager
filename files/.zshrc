@@ -78,6 +78,7 @@ plugins=(
     git
     poetry
     direnv
+    tmux
 )
 
 source $ZSH/oh-my-zsh.sh

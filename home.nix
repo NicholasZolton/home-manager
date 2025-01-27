@@ -9,6 +9,7 @@ in
 {
   imports = [
     ./secrets.nix
+    ./tmux.nix
   ];
   home.username = homeUsername;
   home.homeDirectory = homeDirectory;
@@ -35,7 +36,6 @@ in
     nerd-fonts.jetbrains-mono
     nerd-fonts.roboto-mono
     pipewire
-    tmux
     wget
     curl
     btop
@@ -45,12 +45,12 @@ in
     taskwarrior3
     taskwarrior-tui
     cozy
+    lua
   ];
 
   # Home Manager is pretty good at managing dotfiles. The primary way to manage
   # plain files is through 'home.file'.
   home.file = {
-    ".config/tmux/tmux.conf".source = config.lib.file.mkOutOfStoreSymlink "${homeManagerPath}/files/tmux/tmux.conf";
     ".config/pypoetry/config.toml".source = config.lib.file.mkOutOfStoreSymlink "${homeManagerPath}/files/pypoetry/config.toml";
     ".config/nix/nix.conf".source = config.lib.file.mkOutOfStoreSymlink "${homeManagerPath}/files/nix/nix.conf";
     ".config/kitty/kitty.conf".source = config.lib.file.mkOutOfStoreSymlink "${homeManagerPath}/files/kitty/kitty.conf";
