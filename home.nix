@@ -51,6 +51,7 @@ in
     python314
     gcc14
     nodejs_23
+    git-filter-repo
   ];
 
   # Home Manager is pretty good at managing dotfiles. The primary way to manage
