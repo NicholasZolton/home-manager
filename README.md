@@ -66,3 +66,5 @@ And add the following to your `~/.zprofile` if it is unable to see nix things:
 ```txt
 if [ -e $HOME/.nix-profile/etc/profile.d/nix.sh ]; then . $HOME/.nix-profile/etc/profile.d/nix.sh; fi
 ```
+
+Ghostty is not working, so I will try to fix that later. I recommend Zsh in the meantime.
