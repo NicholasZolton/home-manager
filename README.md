@@ -16,6 +16,8 @@ After that, you need to clone this repo (with submodules):
 git clone --recurse-submodules https://github.com/NicholasZolton/home-manager.git ~/.config/home-manager
 ```
 
+Then, make sure to create the `paths.nix` and `secrets.nix` files 
+
 Lastly, you need to run the following:
 
 ```bash
