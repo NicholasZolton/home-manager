@@ -1,6 +1,9 @@
+# Check out the different options for configuring home-manager with `:Man home-configuration.nix`!
 { config, pkgs, ... }:
 
 let
+  isMac = builtins.match ".*darwin.*" builtins.currentSystem != null;
+  isLinux = builtins.match ".*linux.*" builtins.currentSystem != null;
   pathsConfig = import ./paths.nix;
   homeManagerPath = "${pathsConfig.home.homeDirectory}/.config/home-manager";
   homeUsername = pathsConfig.home.username;
@@ -26,36 +29,52 @@ in
   # The home.packages option allows you to install Nix packages into your
   # environment.
   home.packages = with pkgs; [
-
     # # You can also create simple shell scripts directly inside your
     # # configuration. For example, this adds a command 'my-hello' to your
     # # environment:
-    # (pkgs.writeShellScriptBin "my-hello" ''
-    #   echo "Hello, ${config.home.username}!"
-    # '')
+    (pkgs.writeShellScriptBin "my-hello" ''
+      echo "Hello, ${config.home.username}!"
+    '')
+
+    # fonts
     nerd-fonts.jetbrains-mono
     nerd-fonts.roboto-mono
-    pipewire
+
+    # basic utils
     wget
     curl
-    btop
+    fd
+    ripgrep
+    git-filter-repo
+
+    # dev environments
     devenv
     cachix
     direnv
-    taskwarrior3
-    taskwarrior-tui
-    cozy
+
+    # languages
     lua
-    fd
-    ripgrep
     python314
     gcc14
     nodejs_23
-    git-filter-repo
-    direnv
-    devenv
+  ] ++ (if isMac then [
+    # Mac-specific packages
+  ] else if isLinux then [
+    # Linux-specific packages
+    pipewire
+    cozy
+    btop
+
+    # task warrior
+    taskwarrior3
+    taskwarrior-tui
+
+    # app launcher
+    ulauncher
+
+    # terminal
     kitty
-  ];
+  ] else [ ]);
 
   # Home Manager is pretty good at managing dotfiles. The primary way to manage
   # plain files is through 'home.file'.
@@ -88,28 +107,67 @@ in
     NIXHELLO = "Hello, world!";
   };
 
-  programs.firefox.enable = true;
-  programs.git = {
-    enable = true;
-    userName = "Nicholas";
-    userEmail = "nicholaszolton@gmail.com";
-  };
+  programs = let
+    crossPlatformPrograms = {
+      neovim = {
+        enable = true;
+        extraLuaPackages = ps: [ ps.magick ];
+        extraPackages = [ pkgs.imagemagick ];
+      };
 
-  programs.zsh = {
-    enable = true;
-    oh-my-zsh = {
-      enable = true;
+      # ABSOLUTELY NECESSARY!!
+      home-manager.enable = true;
     };
-  };
 
-  programs.neovim = {
-    enable = true;
-    extraLuaPackages = ps: [ ps.magick ];
-    extraPackages = [ pkgs.imagemagick ];
-  };
+    macPrograms = {
+      ghostty = {
+        enable = true;
+      };
 
-  systemd.user.startServices = "sd-switch";
+      git = {
+        enable = true;
+        userName = "Nicholas";
+        userEmail = "nicholaszolton@gmail.com";
+      };
+    };
 
-  # Let Home Manager install and manage itself.
-  programs.home-manager.enable = true;
+    linuxPrograms = {
+      zsh = {
+        enable = true;
+        oh-my-zsh = {
+          enable = true;
+        };
+      };
+
+      git = {
+        enable = true;
+        userName = "Nicholas";
+        userEmail = "nicholaszolton@gmail.com";
+      };
+
+      firefox = {
+        enable = true;
+      };
+    };
+  in
+  crossPlatformPrograms // (if isMac then macPrograms else if isLinux then linuxPrograms else {});
+
+  (if isLinux then systemd.user.startServices = "sd-switch"; else {})
+
+  manual.manpages.enable = true;
+
+    # garbage collection options
+    nix.gc = let
+      baseConfig = {
+        automatic = true;
+        options = "--delete-older-than 5d";
+      };
+      macConfig = {
+        # mac only options
+      };
+      linuxConfig = {
+        # linux only options
+      };
+    in
+    baseConfig // (if isMac then macConfig else if isLinux then linuxConfig else {});
 }
