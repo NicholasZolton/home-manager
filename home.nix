@@ -52,6 +52,9 @@ in
     gcc14
     nodejs_23
     git-filter-repo
+    direnv
+    devenv
+    kitty
   ];
 
   # Home Manager is pretty good at managing dotfiles. The primary way to manage
