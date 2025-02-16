@@ -4,6 +4,15 @@
 let
   isMac = builtins.match ".*darwin.*" builtins.currentSystem != null;
   isLinux = builtins.match ".*linux.*" builtins.currentSystem != null;
+  isWSL = builtins.match ".*WSL.*"
+    (builtins.readFile (pkgs.runCommand "read-version" { } ''
+      if [ -f "/proc/version" ]; then
+        cat /proc/version > $out
+      else
+        echo "File does not exist." > $out
+      fi
+    '')) != null;
+
   pathsConfig = import ./paths.nix;
   homeManagerPath = "${pathsConfig.home.homeDirectory}/.config/home-manager";
   homeUsername = pathsConfig.home.username;
@@ -76,11 +85,18 @@ in
 
     # terminal
     kitty
+  ] else [ ]) ++ (if isWSL then [
+    wslu
   ] else [ ]);
 
   # Home Manager is pretty good at managing dotfiles. The primary way to manage
   # plain files is through 'home.file'.
-  home.file = {
+  home.file = (if isWSL then {
+    "/etc/wsl.conf".text = ''
+      [boot]
+      systemd=true
+    '';
+  } else { }) // {
     ".config/pypoetry/config.toml".source = config.lib.file.mkOutOfStoreSymlink "${homeManagerPath}/files/pypoetry/config.toml";
     ".config/nix/nix.conf".source = config.lib.file.mkOutOfStoreSymlink "${homeManagerPath}/files/nix/nix.conf";
     ".config/kitty/kitty.conf".source = config.lib.file.mkOutOfStoreSymlink "${homeManagerPath}/files/kitty/kitty.conf";
@@ -157,6 +173,10 @@ in
   systemd.user.startServices = if isLinux then "sd-switch" else true;
 
   manual.manpages.enable = true;
+
+  home.sessionVariables = {
+    IS_MY_WSL = if isWSL then "true" else "false";
+  };
 
   # garbage collection options
   nix.gc =
