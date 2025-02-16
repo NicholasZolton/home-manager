@@ -43,6 +43,8 @@
       # custom bindings
       bind -n M-H previous-window
       bind -n M-L next-window
+      # bind-key -n C-h send-keys C-w
+      # bind-key -n C-Backspace send-keys C-w
 
       # set vi keys
       setw -g mode-keys vi

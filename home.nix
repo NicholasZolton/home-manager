@@ -46,6 +46,7 @@ in
     fd
     ripgrep
     git-filter-repo
+    sleek
 
     # dev environments
     devenv
@@ -57,6 +58,7 @@ in
     python314
     gcc14
     nodejs_23
+
   ] ++ (if isMac then [
     # Mac-specific packages
   ] else if isLinux then [
@@ -103,61 +105,62 @@ in
   #  /etc/profiles/per-user/nicholas/etc/profile.d/hm-session-vars.sh
   home.sessionVariables = {
     EDITOR = "nvim";
-    BROWSER = "firefox";
     NIXHELLO = "Hello, world!";
   };
 
-  programs = let
-    crossPlatformPrograms = {
-      neovim = {
-        enable = true;
-        extraLuaPackages = ps: [ ps.magick ];
-        extraPackages = [ pkgs.imagemagick ];
-      };
-
-      # ABSOLUTELY NECESSARY!!
-      home-manager.enable = true;
-    };
-
-    macPrograms = {
-      ghostty = {
-        enable = true;
-      };
-
-      git = {
-        enable = true;
-        userName = "Nicholas";
-        userEmail = "nicholaszolton@gmail.com";
-      };
-    };
-
-    linuxPrograms = {
-      zsh = {
-        enable = true;
-        oh-my-zsh = {
+  programs =
+    let
+      crossPlatformPrograms = {
+        neovim = {
           enable = true;
+          extraLuaPackages = ps: [ ps.magick ];
+          extraPackages = [ pkgs.imagemagick ];
+        };
+
+        # ABSOLUTELY NECESSARY!!
+        home-manager.enable = true;
+      };
+
+      macPrograms = {
+        ghostty = {
+          enable = true;
+        };
+
+        git = {
+          enable = true;
+          userName = "Nicholas";
+          userEmail = "nicholaszolton@gmail.com";
         };
       };
 
-      git = {
-        enable = true;
-        userName = "Nicholas";
-        userEmail = "nicholaszolton@gmail.com";
-      };
+      linuxPrograms = {
+        zsh = {
+          enable = true;
+          oh-my-zsh = {
+            enable = true;
+          };
+        };
 
-      firefox = {
-        enable = true;
-      };
-    };
-  in
-  crossPlatformPrograms // (if isMac then macPrograms else if isLinux then linuxPrograms else {});
+        git = {
+          enable = true;
+          userName = "Nicholas";
+          userEmail = "nicholaszolton@gmail.com";
+        };
 
-  (if isLinux then systemd.user.startServices = "sd-switch"; else {})
+        firefox = {
+          enable = false; # this can be problematic if you have firefox installed
+        };
+      };
+    in
+    crossPlatformPrograms // (if isMac then macPrograms else if isLinux then linuxPrograms else { });
+
+  systemd.user.startServices = if isLinux then "sd-switch" else true;
 
   manual.manpages.enable = true;
 
-    # garbage collection options
-    nix.gc = let
+  # garbage collection options
+  nix.gc =
+    let
       baseConfig = {
         automatic = true;
         options = "--delete-older-than 5d";
@@ -169,5 +172,5 @@ in
         # linux only options
       };
     in
-    baseConfig // (if isMac then macConfig else if isLinux then linuxConfig else {});
+    baseConfig // (if isMac then macConfig else if isLinux then linuxConfig else { });
 }
