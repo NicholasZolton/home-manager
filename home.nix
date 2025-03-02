@@ -59,7 +59,6 @@ in
 
     # dev environments
     devenv
-    cachix
     direnv
 
     # languages
@@ -85,6 +84,9 @@ in
 
     # terminal
     kitty
+
+    # nix
+    cachix
   ] else [ ]) ++ (if isWSL then [
     wslu
   ] else [ ]);
@@ -142,11 +144,11 @@ in
           enable = true;
         };
 
-        git = {
+        git = ({
           enable = true;
-          userName = "Nicholas";
-          userEmail = "nicholaszolton@gmail.com";
-        };
+          userName = "Nicholas Zolton";
+          userEmail = "Nicholas.Zolton@walmart.com";
+        });
       };
 
       linuxPrograms = {
@@ -164,7 +166,7 @@ in
         };
 
         firefox = {
-          enable = false; # this can be problematic if you have firefox installed
+          enable = false; # this can be problematic
         };
       };
     in
